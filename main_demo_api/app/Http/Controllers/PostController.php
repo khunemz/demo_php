@@ -14,36 +14,51 @@ class PostController extends Controller
 {
   public function index()
   {
-    $model = new Post();
-    $posts = $model->all();
-    $data = [
-      'status' => 200,
-      'message' => 'success',
-      'data' => $posts
-    ];
-    return response($data, 200)
-      ->header('Content-Type', 'application/json');
+    try {
+      $model = new Post();
+      $posts = $model->all();
+      $data = [
+        'status' => 200,
+        'message' => 'success',
+        'data' => $posts
+      ];
+      return response($data, 200)
+        ->header('Content-Type', 'application/json');
+    } catch (\Throwable $th) {
+      $data = [
+        'status' => 500,
+        'message' => 'error',
+        'data' => $th->getMessage()
+      ];
+      return response($data, 500)
+        ->header('Content-Type', 'application/json');
+    }
   }
-
-
   public function show($id)
   {
-    $post = DB::table('posts')
-      ->where('id', '=', $id)
-      ->get();
+    try {
+      $post = DB::table('posts')
+        ->where('id', '=', $id)
+        ->get();
 
 
-    $data = [
-      'status' => 200,
-      'message' => 'success',
-      'data' => $post
-    ];
-    return response($data, 200)
-      ->header('Content-Type', 'application/json');
+      $data = [
+        'status' => 200,
+        'message' => 'success',
+        'data' => $post
+      ];
+      return response($data, 200)
+        ->header('Content-Type', 'application/json');
+    } catch (\Throwable $th) {
+      $data = [
+        'status' => 500,
+        'message' => 'error',
+        'data' => $th->getMessage()
+      ];
+      return response($data, 500)
+        ->header('Content-Type', 'application/json');
+    }
   }
-
-
-
   public function store(Request $request)
   {
     try {
@@ -76,7 +91,7 @@ class PostController extends Controller
     } catch (\Throwable $th) {
       $data = [
         'status' => 400,
-        'message' => 'success',
+        'message' => 'error',
         'data' => $th->getMessage()
       ];
       return response($data, 400)
@@ -92,9 +107,7 @@ class PostController extends Controller
         'slug' => 'required',
         'description' => 'required',
       ]);
-      DB::table('posts')->
-        where(['id' => $id])->
-        update([
+      DB::table('posts')->where(['id' => $id])->update([
           'title' => $request->input('title'),
           'description' => $request->input('description'),
           'slug' => $request->input('slug'),
@@ -115,7 +128,28 @@ class PostController extends Controller
     } catch (\Throwable $th) {
       $data = [
         'status' => 400,
+        'message' => 'error',
+        'data' => $th->getMessage()
+      ];
+      return response($data, 400)
+        ->header('Content-Type', 'application/json');
+    }
+  }
+  public function destroy($id)
+  {
+    try {
+      DB::table('posts')->where(['id' => $id])->delete();
+      $data = [
+        'status' => 200,
         'message' => 'success',
+        'data' => null
+      ];
+      return response($data, 200)
+        ->header('Content-Type', 'application/json');
+    } catch (\Throwable $th) {
+      $data = [
+        'status' => 400,
+        'message' => 'error',
         'data' => $th->getMessage()
       ];
       return response($data, 400)

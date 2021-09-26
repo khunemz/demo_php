@@ -22,6 +22,8 @@ Route::get('/posts', [PostController::class, 'index'])->name('post.index');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('post.show');
 Route::post('/posts/store', [PostController::class, 'store'])->name('post.store');
 Route::put('/posts/update/{id}', [PostController::class, 'update'])->name('post.update');
+Route::post('/posts/destroy/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
