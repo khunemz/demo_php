@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from './../extendTheme'
+import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 function App() {
