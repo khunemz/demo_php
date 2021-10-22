@@ -2,14 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from './../extendTheme'
-import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
+import { Container, Box } from "@chakra-ui/react";
+import Hero from "./Hero";
+
 
 function App() {
     return (
         <ChakraProvider theme={theme}>
             <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-            <Navbar />            
+            <Navbar />         
+            <Hero />
         </ChakraProvider>
     );
 }
