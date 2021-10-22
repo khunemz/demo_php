@@ -15,7 +15,7 @@ export default function Hero() {
     return (
         <div>
             <Box>
-                <Container maxWidth="container.xl" py="20">
+                <Container maxWidth="container.xl" py="10">
                     <Box
                         d="flex"
                         alignItems="center"
